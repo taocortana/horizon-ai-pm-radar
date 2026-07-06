@@ -20,43 +20,48 @@ Respond with valid JSON only:
 
 If there are no duplicates at all, return: {{"duplicates": []}}"""
 
-CONTENT_ANALYSIS_SYSTEM = """You are an expert content curator helping filter important technical and academic information.
+CONTENT_ANALYSIS_SYSTEM = """You are an AI industry intelligence analyst curating a daily briefing for AI product managers.
 
 Score content on a 0-10 scale based on importance and relevance:
 
-**9-10: Groundbreaking** - Major breakthroughs, paradigm shifts, or highly significant announcements
-- New major version releases of widely-used technologies
-- Significant research breakthroughs
-- Important industry-changing announcements
+**9-10: Strategic signal** - Developments that may materially change AI products or markets
+- Major model, platform, interface, or capability breakthroughs
+- Product launches with strong evidence of a new user behavior or category
+- Industry moves, regulation, or adoption signals that reshape competition
+- Influential first-hand views that change how product leaders should think
 
-**7-8: High Value** - Important developments worth immediate attention
-- Interesting technical deep-dives
-- Novel approaches to known problems
-- Insightful analysis or commentary
-- Valuable tools or libraries
+**7-8: High value** - Developments an AI product manager should understand now
+- New applications, workflows, tools, or interaction patterns with practical value
+- Credible case studies with measurable user or business outcomes
+- Important technical advances that unlock or constrain product capabilities
+- Insightful analysis from respected builders, researchers, executives, or investors
+- Meaningful funding, partnership, distribution, pricing, safety, or policy changes
 
-**5-6: Interesting** - Worth knowing but not urgent
-- Incremental improvements
-- Useful tutorials
-- Moderate community interest
+**5-6: Useful context** - Worth knowing, but not urgent
+- Incremental product or model improvements
+- Early experiments without strong evidence of adoption
+- Useful tutorials, explainers, or moderate community discussion
 
-**3-4: Low Priority** - Generic or routine content
-- Minor updates
-- Common knowledge
-- Overly promotional content
+**3-4: Low priority** - Generic, routine, or weakly supported content
+- Minor updates without user or market impact
+- Repeated news, common knowledge, or speculative commentary
+- Marketing claims without evidence
 
-**0-2: Noise** - Not relevant or low quality
-- Spam or purely promotional
-- Off-topic content
-- Trivial updates
+**0-2: Noise** - Irrelevant or low-quality content
+- Spam, pure promotion, clickbait, or unsupported rumors
+- Off-topic or trivial updates
 
 Consider:
-- Technical depth and novelty
-- Potential impact on the field
-- Quality of writing/presentation
-- Relevance to software engineering, AI/ML, and systems research
+- Product impact: which users, jobs, and workflows may change
+- User value: whether the development solves a real and recurring problem
+- Business impact: pricing, distribution, monetization, adoption, and competitive dynamics
+- Technical feasibility: maturity, limitations, dependencies, safety, and cost
+- Novelty and durability: distinguish lasting signals from short-lived hype
+- Credibility: prefer primary sources, concrete evidence, and transparent methodology
 - Community discussion quality: insightful comments, diverse viewpoints, and debates increase value
 - Engagement signals: high upvotes/favorites with substantive discussion indicate community-validated importance
+
+The briefing is global and source language does not affect the score. Favor information that helps an AI product manager make roadmap, positioning, research, or go-to-market decisions.
 """
 
 CONTENT_ANALYSIS_USER = """Analyze the following content and provide a JSON response with:
@@ -116,9 +121,9 @@ Field definitions:
 
 1. **whats_new** (1-2 complete sentences): What exactly happened, what changed, what breakthrough was made. Be specific — mention names, versions, numbers, dates when available.
 
-2. **why_it_matters** (1-2 complete sentences): Why this is significant, what impact it could have, who will be affected. Connect to the broader ecosystem or industry trends.
+2. **why_it_matters** (1-2 complete sentences): Why this is significant for AI product managers, what user behavior or product opportunity may change, and who will be affected. Connect it to competitive dynamics, adoption, distribution, monetization, or broader industry trends when supported by evidence.
 
-3. **key_details** (1-2 complete sentences): Notable technical details, limitations, caveats, or additional context worth knowing. Include specifics that a technically-minded reader would find valuable.
+3. **key_details** (1-2 complete sentences): Notable technical details, product implications, limitations, adoption barriers, caveats, or additional context worth knowing. Include concrete specifics rather than generic advice.
 
 4. **background** (2-4 sentences): Brief background knowledge that helps a reader without deep domain expertise understand the news. Explain key concepts, technologies, or context that the news assumes the reader already knows.
 
@@ -129,8 +134,9 @@ Field definitions:
 - All *_zh fields MUST be written in Simplified Chinese (简体中文). 绝对不能用英文写 _zh 字段的内容。Only keep technical abbreviations, acronyms, and widely-used proper nouns (e.g. "GPT-4", "CUDA", "Rust") in their original English form; everything else must be Chinese.
 
 Guidelines:
-- EVERY field (except community_discussion when no comments exist) must contain at least one complete sentence — no field may be empty or contain just a phrase
+- EVERY field (except community_discussion when no comments exists) must contain at least one complete sentence — no field may be empty or contain just a phrase
 - Base your explanation on the provided content and web search results — do NOT fabricate information
+- Surface a concrete product takeaway when the evidence supports one, but do not invent target users, metrics, pricing, or market impact
 - ONLY explain concepts and terms that are explicitly mentioned in the title, summary, or content
 - Use the web search results to ensure accuracy, especially for recent projects, tools, or events
 - If the news is self-explanatory and needs no background, return an empty string for both background fields

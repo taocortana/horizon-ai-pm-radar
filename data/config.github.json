@@ -5,15 +5,26 @@
     "model": "deepseek-v4-flash",
     "base_url": "https://api.deepseek.com",
     "api_key_env": "DEEPSEEK_API_KEY",
-    "temperature": 0.3,
+    "temperature": 0.2,
     "max_tokens": 8192,
-    "throttle_sec": 1,
+    "throttle_sec": 0,
     "languages": [
-      "zh",
-      "en"
+      "zh"
     ],
-    "analysis_concurrency": 5,
-    "enrichment_concurrency": 5
+    "analysis_concurrency": 4,
+    "enrichment_concurrency": 2
+  },
+  "email": {
+    "enabled": false,
+    "smtp_server": "",
+    "smtp_port": 465,
+    "imap_enabled": false,
+    "imap_server": "",
+    "imap_port": 993,
+    "email_address": "",
+    "sender_name": "AI 产品经理情报雷达",
+    "subscribe_keyword": "SUBSCRIBE",
+    "unsubscribe_keyword": "UNSUBSCRIBE"
   },
   "sources": {
     "github": [
@@ -23,53 +34,142 @@
         "enabled": true
       },
       {
+        "type": "user_events",
+        "username": "simonw",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "openai",
+        "repo": "openai-python",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "anthropics",
+        "repo": "anthropic-sdk-python",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "huggingface",
+        "repo": "transformers",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "langgenius",
+        "repo": "dify",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "langchain-ai",
+        "repo": "langchain",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "ollama",
+        "repo": "ollama",
+        "enabled": true
+      },
+      {
         "type": "repo_releases",
         "owner": "vllm-project",
         "repo": "vllm",
-        "enabled": true
-      },
-      {
-        "type": "repo_releases",
-        "owner": "sgl-project",
-        "repo": "sglang",
-        "enabled": true
-      },
-      {
-        "type": "repo_releases",
-        "owner": "triton-lang",
-        "repo": "triton",
         "enabled": true
       }
     ],
     "hackernews": {
       "enabled": true,
-      "fetch_top_stories": 30,
-      "min_score": 150
+      "fetch_top_stories": 40,
+      "min_score": 80
     },
     "rss": [
+      {
+        "name": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
+        "enabled": true,
+        "category": "frontier-ai"
+      },
+      {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/rss.xml",
+        "enabled": true,
+        "category": "frontier-ai"
+      },
+      {
+        "name": "Google AI",
+        "url": "https://blog.google/technology/ai/rss/",
+        "enabled": true,
+        "category": "product-updates"
+      },
+      {
+        "name": "NVIDIA Generative AI",
+        "url": "https://blogs.nvidia.com/blog/category/generative-ai/feed/",
+        "enabled": true,
+        "category": "ai-infrastructure"
+      },
+      {
+        "name": "TechCrunch AI",
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "enabled": true,
+        "category": "industry-trends"
+      },
+      {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/category/ai/feed/",
+        "enabled": true,
+        "category": "industry-trends"
+      },
+      {
+        "name": "Product Hunt",
+        "url": "https://www.producthunt.com/feed",
+        "enabled": true,
+        "category": "ai-applications"
+      },
       {
         "name": "Simon Willison",
         "url": "https://simonwillison.net/atom/everything/",
         "enabled": true,
-        "category": "ai-tools"
+        "category": "voices"
       },
       {
-        "name": "GitHub Trending - Daily",
-        "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+        "name": "Latent Space",
+        "url": "https://www.latent.space/feed",
         "enabled": true,
-        "category": "github-trending"
+        "category": "voices"
       },
       {
-        "name": "Semianalysis",
-        "url": "https://newsletter.semianalysis.com/feed",
+        "name": "One Useful Thing",
+        "url": "https://www.oneusefulthing.org/feed",
         "enabled": true,
-        "category": "semiconductors"
+        "category": "voices"
       },
       {
-        "name": "LWN.net",
-        "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
+        "name": "Interconnects",
+        "url": "https://www.interconnects.ai/feed",
         "enabled": true,
-        "category": "linux-kernel"
+        "category": "voices"
+      },
+      {
+        "name": "AI Snake Oil",
+        "url": "https://www.normaltech.ai/feed",
+        "enabled": true,
+        "category": "analysis"
+      },
+      {
+        "name": "量子位",
+        "url": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+        "enabled": true,
+        "category": "industry-trends"
+      },
+      {
+        "name": "新智元",
+        "url": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+        "enabled": true,
+        "category": "industry-trends"
       }
     ],
     "reddit": {
@@ -80,70 +180,165 @@
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60
+          "fetch_limit": 20,
+          "min_score": 30
         },
         {
           "subreddit": "LocalLLaMA",
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60
+          "fetch_limit": 20,
+          "min_score": 30
+        },
+        {
+          "subreddit": "OpenAI",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 15,
+          "min_score": 20
+        },
+        {
+          "subreddit": "ClaudeAI",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 15,
+          "min_score": 20
         }
       ],
       "users": [],
-      "fetch_comments": 10
+      "fetch_comments": 5
     },
     "telegram": {
+      "enabled": false,
+      "channels": []
+    },
+    "twitter": {
+      "enabled": false,
+      "mode": "apify",
+      "users": [
+        "sama",
+        "karpathy",
+        "AndrewYNg",
+        "demishassabis",
+        "ylecun",
+        "fchollet",
+        "alexandr_wang"
+      ],
+      "fetch_limit": 30,
+      "fetch_reply_text": false,
+      "max_replies_per_tweet": 3,
+      "max_tweets_to_expand": 10,
+      "reply_min_likes": 20
+    },
+    "openbb": {
+      "enabled": false,
+      "fetch_filings": false,
+      "filings_provider": "sec",
+      "watchlists": []
+    },
+    "ossinsight": {
       "enabled": true,
-      "channels": [
-        {
-          "channel": "zaihuapd",
-          "enabled": true,
-          "fetch_limit": 20
-        }
-      ]
+      "period": "past_24_hours",
+      "languages": [
+        "All",
+        "Python",
+        "TypeScript"
+      ],
+      "keywords": [
+        "artificial intelligence",
+        "generative ai",
+        "large language model",
+        "llm",
+        "ai agent",
+        "agents",
+        "multimodal",
+        "model context protocol",
+        "mcp",
+        "inference"
+      ],
+      "min_stars": 20,
+      "max_items": 25
+    },
+    "gdelt": {
+      "enabled": true,
+      "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI agent\")",
+      "mode": "ArtList",
+      "max_records": 40,
+      "timespan": "24h",
+      "language": "english",
+      "country": null,
+      "category": "industry-trends"
+    },
+    "google_news": {
+      "enabled": true,
+      "query": "\"人工智能\" (新技术 OR 新产品 OR 新应用 OR 大模型 OR 智能体 OR 融资 OR 趋势)",
+      "language": "zh-CN",
+      "country": "CN",
+      "ceid": "CN:zh-Hans",
+      "max_results": 40,
+      "category": "industry-trends"
     }
   },
   "filtering": {
-    "ai_score_threshold": 8.0,
-    "time_window_hours": 24
+    "ai_score_threshold": 7.0,
+    "time_window_hours": 24,
+    "max_items": 20,
+    "category_groups": {
+      "frontier": {
+        "name": "前沿技术",
+        "limit": 5,
+        "categories": [
+          "frontier-ai",
+          "ai-research",
+          "ai-infrastructure"
+        ]
+      },
+      "products": {
+        "name": "产品与应用",
+        "limit": 6,
+        "categories": [
+          "ai-products",
+          "ai-applications",
+          "product-updates",
+          "ai-tools"
+        ]
+      },
+      "industry": {
+        "name": "行业与趋势",
+        "limit": 5,
+        "categories": [
+          "industry-trends",
+          "business"
+        ]
+      },
+      "voices": {
+        "name": "人物与观点",
+        "limit": 4,
+        "categories": [
+          "voices",
+          "analysis"
+        ]
+      }
+    },
+    "default_group": "other",
+    "default_group_limit": 5
   },
   "webhook": {
-    "enabled": true,
+    "enabled": false,
     "url_env": "HORIZON_WEBHOOK_URL",
-    "delivery": "summary_and_items",
-    "overview_position": "last",
-    "platform": "feishu",
-    "layout": "collapsible",
+    "delivery": "summary",
+    "overview_position": "first",
+    "platform": "generic",
+    "layout": "markdown",
     "fallback_layout": "markdown",
     "languages": [
       "zh"
     ],
     "request_body": {
-      "msg_type": "interactive",
-      "card": {
-        "schema": "2.0",
-        "config": {
-          "wide_screen_mode": true
-        },
-        "header": {
-          "title": {
-            "tag": "plain_text",
-            "content": "#{message_title}"
-          },
-          "template": "blue"
-        },
-        "body": {
-          "elements": [
-            {
-              "tag": "markdown",
-              "content": "#{summary}"
-            }
-          ]
-        }
-      }
+      "text": "#{message_title}\n#{summary}"
     },
     "headers": ""
   }
